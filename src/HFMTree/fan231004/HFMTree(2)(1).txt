@@ -1,0 +1,88 @@
+package com.cl.hfmTree0927.hfmTree;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 哈夫曼树   "aaaadfasdfasghggafsdgh" =>  "1010100010101010010"
+ * 练习：1.根据给定的字符串内容(读取文本文件)，统计没个字符出现的频率,创建对应的节点
+ *      2.根据节点的权值创建哈夫曼树，统计字符编码
+ *      3.把字符数据替换成对应的编码
+ */
+public class HFMTree {
+    public List<TreeNode> listNode = new ArrayList<>();
+
+    //对ListNode 进排序(快排)
+    public void sort(List<TreeNode> listNode){
+       
+    }
+
+    //创建哈夫曼树
+    public TreeNode createTree(List<TreeNode> listNode){
+        while(listNode.size() > 1) {
+            //对节点排序
+            sort(listNode);
+            //从ListNode 找出最小的两个节点
+            TreeNode leftNode = listNode.remove(0);
+            TreeNode rightNode = listNode.remove(0);
+
+            //根据最小的两个节点创建父节点
+            TreeNode node = new TreeNode(leftNode.data + rightNode.data);
+            node.left = leftNode;
+            node.right = rightNode;
+
+            //把子树添加List中，重新排序
+            listNode.add(node);
+        }
+        //返回哈夫曼树的根节点
+        return listNode.remove(0);
+    }
+    //哈夫曼：统计叶子节点的哈夫曼编码
+    public void setCode(TreeNode root){
+        if(root.left != null) {
+            root.left.code = root.code + "0";
+            setCode(root.left);
+        }
+        if(root.right != null) {
+            root.right.code = root.code + "1";
+            setCode(root.right);
+        }
+    }
+    //打印叶子节点
+    public void inorder(TreeNode root){
+       
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {3,1,2,4,5,6};
+        List<TreeNode> listNode = new ArrayList<>();
+        for(int i=0;i<arr.length;i++){
+            listNode.add(new TreeNode(arr[i]));
+        }
+        HFMTree hfm = new HFMTree();
+        TreeNode root = hfm.createTree(listNode);
+
+        hfm.setCode(root);
+
+        hfm.inorder(root);
+
+    }
+
+
+}
+//树的节点
+class TreeNode{
+    public String code = "";  //统计节点的编码
+    public int data;   //字符出现次数
+    public char c;  //当前的字符内容
+    public TreeNode left;
+    public TreeNode right;
+
+    public TreeNode(){
+
+    }
+    public TreeNode(int data){
+        this.data = data;
+    }
+
+}

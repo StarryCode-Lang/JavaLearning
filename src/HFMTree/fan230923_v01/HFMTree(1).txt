@@ -1,0 +1,50 @@
+package com.cl.hfmTree0923;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 哈夫曼树
+ * 练习：1.对节点序列排序(最好是快排)
+ *     2.对哈夫曼的叶子节点统计对应的编码
+ */
+public class HFMTree {
+    public List<TreeNode> listNode = new ArrayList<>();
+
+    //对ListNode 进排序(快排)
+
+    //创建哈夫曼树
+    public TreeNode createTree(){
+        while(listNode.size() > 1) {
+            //对节点排序
+            //从ListNode 找出最小的两个节点
+            TreeNode leftNode = listNode.remove(0);
+            TreeNode rightNode = listNode.remove(0);
+
+            //根据最小的两个节点创建父节点
+            TreeNode node = new TreeNode(leftNode.data + rightNode.data);
+
+
+            //把子树添加List中，重新排序
+            listNode.add(node);
+        }
+        //返回哈夫曼树的根节点
+        return null;
+    }
+    //哈夫曼：统计叶子节点的哈夫曼编码
+
+}
+//树的节点
+class TreeNode{
+    public int data;
+    public TreeNode left;
+    public TreeNode right;
+
+    public TreeNode(){
+
+    }
+    public TreeNode(int data){
+        this.data = data;
+    }
+
+}

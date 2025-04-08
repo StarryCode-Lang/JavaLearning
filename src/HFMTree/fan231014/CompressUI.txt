@@ -1,0 +1,72 @@
+package com.cl.hfmTree0927;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+
+//压缩工具
+//去压缩大文件？
+public class CompressUI {
+
+    public void initUI(){
+        JFrame jf = new JFrame("压缩工具");
+        jf.setSize(450,500);
+        jf.setLocationRelativeTo(null);
+        jf.setDefaultCloseOperation(3);
+        jf.setLayout(new FlowLayout());
+
+        JTextField jtf = new JTextField();
+        jtf.setPreferredSize(new Dimension(330,30));
+        jf.add(jtf);
+
+        JButton btn = new JButton("选择文件");
+        jf.add(btn);
+
+        JButton btn2 = new JButton("确认压缩");
+        jf.add(btn2);
+
+        ButtonListener listener = new ButtonListener(jtf,jf);
+        btn.addActionListener(listener);
+        btn2.addActionListener(listener);
+
+        jf.setVisible(true);
+
+    }
+
+    public static void main(String[] args) {
+        new CompressUI().initUI();
+    }
+}
+//事件处理类
+class ButtonListener implements ActionListener{
+    private JTextField jtf;
+    private  JFrame jf;
+    private String path = "";
+
+    public ButtonListener(JTextField jtf, JFrame jf){
+        this.jtf = jtf;
+        this.jf = jf;
+    }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String s = e.getActionCommand();
+        switch (s){
+            case "选择文件":
+                JFileChooser jFileChooser = new JFileChooser();
+                int returnValue = jFileChooser.showOpenDialog(null);
+                if(returnValue == JFileChooser.APPROVE_OPTION){
+                    File file = jFileChooser.getSelectedFile();
+                    path = file.toString();
+                    jtf.setText(path);
+                    System.out.println("path:"+path);
+                }
+                break;
+            case "确认压缩":
+                new HFMTree().compress(path);
+                jf.dispose();
+                break;
+        }
+    }
+}

@@ -1,0 +1,44 @@
+#include <iostream>
+#include<queue>
+#include<stack>
+
+using namespace std;
+
+struct TreeNode {
+    int val;
+    TreeNode *Firstcd;
+    TreeNode *Nextbro;
+
+    TreeNode() : val(0), Firstcd(nullptr), Nextbro(nullptr) {}
+
+    TreeNode(int x) : val(x), Firstcd(nullptr), Nextbro(nullptr) {}
+
+    TreeNode(int x, TreeNode *Firstcd, TreeNode *Nextbro) : val(x), Firstcd(Firstcd), Nextbro(Nextbro) {}
+};
+
+int MaxHeight(TreeNode *root) {
+    if (root == nullptr)return 0;
+    int mh = 0, tmp;
+    while (root->Nextbro != nullptr) {
+        tmp = MaxHeight(root->Nextbro);
+        if (tmp > mh)mh = tmp;
+    }
+    int tmp1 = MaxHeight(root->Firstcd);
+    return max(tmp, tmp1) + 1;
+}
+
+int main() {
+    TreeNode *node1 = new TreeNode(1);
+    TreeNode *node2 = new TreeNode(2);
+    TreeNode *node3 = new TreeNode(3);
+    TreeNode *node4 = new TreeNode(4);
+    TreeNode *node5 = new TreeNode(5);
+    TreeNode *node6 = new TreeNode(6);
+    node1->Firstcd = node2;
+    node2->Nextbro = node3;
+    node3->Nextbro = node4;
+    node3->Firstcd = node5;
+    node5->Nextbro = node6;
+    cout << MaxHeight(node1);
+    return 0;
+}

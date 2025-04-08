@@ -1,0 +1,54 @@
+package HashMap.frb230915_v01;
+
+//自定义哈希表
+//任务：1Hash表不能添加重复的key
+//     2可以存null key null value
+//     3把泛型用在哈希表中
+//     4研究下系统中HashMap底层原理，写篇教程
+public class MHashMap<K, V> { // 3. 使用泛型来定义哈希表的键和值类型
+    //保存链表的数组
+    private LinkList<K, V>[] linkListArr; // 使用泛型的链表数组
+    private static int len = 16;
+    private int size;
+
+    public MHashMap() {
+        this(len);
+    }
+
+    //初始化链表的数组长度
+    public MHashMap(int size) {
+        this.size = size;
+        linkListArr = new LinkList[size];
+        //初始化链表的头节点
+        for (int i = 0; i < size; i++) {
+            linkListArr[i] = new LinkList<>();
+        }
+    }
+
+    //put(存数据)
+    public void put(K key, V value) { // 使用泛型的键和值类型
+        //根据key计算位置
+        int index = hash(key);
+        LinkList<K, V> linkList = linkListArr[index];
+        linkList.add(key, value);
+    }
+
+    //get(取数据)
+    public V get(K key) { // 使用泛型的键类型
+        int index = hash(key);
+        LinkList<K, V> linkList = linkListArr[index];
+        //遍历链表
+        for (int i = 0; i < linkList.size(); i++) {
+            Node<K, V> node = linkList.get(i);
+            if (node.key.equals(key)) {
+                return node.value;
+            }
+        }
+        return null;
+    }
+
+    //散列函数
+    public int hash(K key) { // 使用泛型的键类型
+        return key.hashCode() % size;
+    }
+}

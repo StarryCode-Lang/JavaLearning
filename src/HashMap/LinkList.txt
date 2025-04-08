@@ -1,0 +1,40 @@
+package com.cl.mp0913;
+
+//链表
+public class LinkList {
+    private Node root;  //不存数据，保存链表的头节点
+    private int size=0;
+
+    public LinkList(){
+        root = new Node();
+    }
+
+    //添加
+    public void add(Object key,Object value){
+
+    }
+    //取数据
+    public Node get(int index){
+
+        return null;
+    }
+
+    public int size(){
+        return size;
+    }
+
+
+}
+class Node{
+    public Object key;
+    public Object value;
+    public Node next;
+
+    public Node(Object key,Object value){
+        this.key = key;
+        this.value = value;
+    }
+    public Node(){
+
+    }
+}

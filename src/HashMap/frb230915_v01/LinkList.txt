@@ -1,0 +1,63 @@
+package HashMap.frb230915_v01;
+
+//链表
+public class LinkList {
+    private Node head; // 头节点
+    private int size; // 链表大小
+
+    public LinkList() {
+        head = null;
+        size = 0;
+    }
+
+    public void add(Object key, Object value) {
+        Node newNode = new Node(key, value);
+
+        if (head == null) {
+            // 链表为空，将新节点设置为头节点
+            head = newNode;
+        } else {
+            // 遍历链表找到最后一个节点
+            Node current = head;
+            while (current.next != null) {
+                current = current.next;
+            }
+            // 将新节点设置为最后一个节点的next属性
+            current.next = newNode;
+        }
+
+        size++;
+    }
+
+    public Node get(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Invalid index: " + index);
+        }
+
+        Node current = head;
+        for (int i = 0; i < index; i++) {
+            current = current.next;
+        }
+
+        return current;
+    }
+
+    public int size() {
+        return size;
+    }
+}
+
+class Node {
+    public Object key;
+    public Object value;
+    public Node next;
+
+    public Node(Object key, Object value) {
+        this.key = key;
+        this.value = value;
+    }
+
+    public Node() {
+
+    }
+}

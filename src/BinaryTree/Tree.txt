@@ -1,0 +1,72 @@
+package com.cl.tree0916;
+
+//排序树
+//练习:1.创建排序树
+//    2.用非递归方式实现树的三序遍历
+public class Tree {
+    public TreeNode root;  //树的跟节点
+
+    //左小 右大
+    public void addNode(TreeNode node){
+        if(root == null){
+            root = node;
+        }else{
+            //保存当前节点
+            TreeNode curr = root;
+            while(true) {
+                if (curr.data > node.data) {
+                    if (curr.left == null) {
+                        curr.left = node;
+  
+                    }
+                    curr = curr.left;
+                }
+                if (curr.data <= node.data) {
+                    if (curr.right == null) {
+                        curr.right = node;
+
+                    }
+                    curr = curr.right;
+
+                }
+            }
+        }
+    }
+    //遍历二叉树三序遍历
+    //前序：根-左-右    中序:左-根-右    后序：左-右-根
+    //中序遍历
+    public void inorder(TreeNode root){
+        if(root != null) {
+            inorder(root.left);
+            System.out.print(root.data+" ");
+            inorder(root.right);
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {7,5,9,6,3,8,10,4};
+
+        Tree tree = new Tree();
+
+        for(int i=0;i<arr.length;i++){
+            TreeNode node = new TreeNode(arr[i]);
+            tree.addNode(node);
+        }
+
+        tree.inorder(tree.root);
+    }
+}
+//树的节点
+class TreeNode{
+    public TreeNode left;
+    public TreeNode right;
+    public int data;
+
+    public TreeNode(){
+
+    }
+    public TreeNode(int data){
+        this.data = data;
+    }
+
+}
